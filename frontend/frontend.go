@@ -1,6 +1,7 @@
 package main
 
 import (
+	"embed"
 	"html/template"
 	"log"
 	"net/http"
@@ -11,6 +12,9 @@ type PageData struct {
 	Value string
 }
 
+//go:embed index.html
+var templateFile embed.FS
+
 func main() {
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		varName := r.URL.Path[1:]
@@ -18,13 +22,7 @@ func main() {
 
 		data := PageData{Value: value}
 
-		tmplFile := "index.html"
-		_, err := os.Stat(tmplFile)
-		if os.IsNotExist(err) {
-			log.Fatalf("Template file not found: %s", tmplFile)
-		}
-
-		tmpl, err := template.ParseFiles(tmplFile)
+		tmpl, err := template.ParseFS(templateFile, "index.html")
 		if err != nil {
 			log.Fatalf("Failed to parse template: %v", err)
 		}
