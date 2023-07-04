@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+option go_package = "server/pb";
+
+message GetEnvironmentVariableRequest {
+  string variable_name = 1;
+}
+
+message GetEnvironmentVariableResponse {
+  string value = 1;
+}
+
+service EnvVariable {
+  rpc GetEnvironmentVariable(GetEnvironmentVariableRequest) returns (GetEnvironmentVariableResponse) {}
+}
