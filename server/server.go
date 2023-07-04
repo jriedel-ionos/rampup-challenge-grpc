@@ -3,19 +3,26 @@ package main
 import (
 	"context"
 	"fmt"
-	"google.golang.org/grpc"
-	"google.golang.org/grpc/reflection"
 	"log"
 	"net"
 	"os"
 	"rampup-challenge/server/pb"
+
+	"google.golang.org/grpc"
+	"google.golang.org/grpc/reflection"
 )
 
 type server struct {
 	pb.UnimplementedEnvVariableServer
 }
 
-func (s *server) GetEnvironmentVariable(ctx context.Context, in *pb.GetEnvironmentVariableRequest) (*pb.GetEnvironmentVariableResponse, error) {
+func (s *server) GetEnvironmentVariable(
+	_ context.Context,
+	in *pb.GetEnvironmentVariableRequest,
+) (
+	*pb.GetEnvironmentVariableResponse,
+	error,
+) {
 	value := os.Getenv(in.VariableName)
 	fmt.Println(value)
 	return &pb.GetEnvironmentVariableResponse{
