@@ -18,11 +18,15 @@ func main() {
 
 		data := PageData{Value: value}
 
-		tmpl, err := template.ParseFiles("index.html")
+		tmplFile := "index.html"
+		_, err := os.Stat(tmplFile)
+		if os.IsNotExist(err) {
+			log.Fatalf("Template file not found: %s", tmplFile)
+		}
+
+		tmpl, err := template.ParseFiles(tmplFile)
 		if err != nil {
-			log.Println("Failed to parse template:", err)
-			http.Error(w, "Internal Server Error", http.StatusInternalServerError)
-			return
+			log.Fatalf("Failed to parse template: %v", err)
 		}
 
 		err = tmpl.Execute(w, data)
