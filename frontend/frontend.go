@@ -58,7 +58,6 @@ func mainImpl() error {
 		if err != nil {
 			log.Printf("Failed to get environment variable: %v", err)
 			http.Error(w, "Internal Server Error", http.StatusInternalServerError)
-			log.Println("Exiting due to error")
 			return
 		}
 
@@ -68,7 +67,6 @@ func mainImpl() error {
 		if err != nil {
 			log.Printf("Failed to render template: %v", err)
 			http.Error(w, "Internal Server Error", http.StatusInternalServerError)
-			log.Println("Exiting due to error")
 			return
 		}
 	})
