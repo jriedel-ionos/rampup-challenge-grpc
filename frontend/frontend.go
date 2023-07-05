@@ -41,5 +41,8 @@ func main() {
 	})
 
 	log.Printf("Frontend server started on port %v", *port)
-	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%v", *port), nil))
+	err = http.ListenAndServe(fmt.Sprintf(":%v", *port), nil)
+	if err != nil {
+		log.Fatalf(err.Error())
+	}
 }
