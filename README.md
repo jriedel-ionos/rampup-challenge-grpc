@@ -16,3 +16,10 @@ and for frontend server:
 
 To show an environment variable in the browser:   
 `localhost:8081/yourvariable` for example `SHELL` --> `localhost:8081/SHELL`
+
+## Build docker images
+
+### Server
+`docker build -t ghcr.io/jriedel-ionos/rampup-challenge-grpc/server:latest -f Dockerfile.server .`
+### Frontend
+`docker build -t ghcr.io/jriedel-ionos/rampup-challenge-grpc/frontend:latest -f Dockerfile.frontend .`
