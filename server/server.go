@@ -6,8 +6,8 @@ import (
 	"log"
 	"net"
 	"os"
-	"rampup-challenge/server/pb"
 
+	"github.com/jriedel-ionos/rampup-challenge-grpc/server/pb"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 )

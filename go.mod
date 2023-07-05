@@ -1,4 +1,4 @@
-module rampup-challenge
+module github.com/jriedel-ionos/rampup-challenge-grpc
 
 go 1.20
 
