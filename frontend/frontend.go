@@ -18,16 +18,16 @@ var templateFile embed.FS
 func main() {
 	const Port = "8081"
 
+	tmpl, err := template.ParseFS(templateFile, "index.html")
+	if err != nil {
+		log.Fatalf("Failed to parse template: %v", err)
+	}
+
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		varName := r.URL.Path[1:]
 		value := os.Getenv(varName)
 
 		data := PageData{Value: value}
-
-		tmpl, err := template.ParseFS(templateFile, "index.html")
-		if err != nil {
-			log.Fatalf("Failed to parse template: %v", err)
-		}
 
 		err = tmpl.Execute(w, data)
 		if err != nil {
