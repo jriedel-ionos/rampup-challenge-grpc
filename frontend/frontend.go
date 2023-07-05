@@ -16,6 +16,8 @@ type PageData struct {
 var templateFile embed.FS
 
 func main() {
+	const Port = "8081"
+
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		varName := r.URL.Path[1:]
 		value := os.Getenv(varName)
@@ -35,6 +37,6 @@ func main() {
 		}
 	})
 
-	log.Println("Frontend server started on port 8081")
-	log.Fatal(http.ListenAndServe(":8081", nil))
+	log.Println("Frontend server started on port " + Port)
+	log.Fatal(http.ListenAndServe(":"+Port, nil))
 }

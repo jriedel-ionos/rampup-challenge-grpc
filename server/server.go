@@ -31,10 +31,14 @@ func (s *server) GetEnvironmentVariable(
 }
 
 func main() {
-	listener, err := net.Listen("tcp", ":8080")
+	const Port = "8080"
+
+	listener, err := net.Listen("tcp", ":"+Port)
 	if err != nil {
 		panic(err)
 	}
+
+	log.Println("Backend server started on port " + Port)
 
 	s := grpc.NewServer()
 	reflection.Register(s)
