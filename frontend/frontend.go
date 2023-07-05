@@ -22,19 +22,24 @@ type PageData struct {
 var templateFile embed.FS
 
 func main() {
+	if err := mainImpl(); err != nil {
+		log.Fatal(err)
+	}
+}
+
+func mainImpl() error {
 	port := flag.Int("port", 8081, "port for the frontend")
-	// TODO get configured port from backend, not hardcoded
 	backendAddress := flag.String("backend", "localhost:8080", "address of the backend server")
 	flag.Parse()
 
 	tmpl, err := template.ParseFS(templateFile, "index.html")
 	if err != nil {
-		log.Fatalf("Failed to parse template: %v", err)
+		return fmt.Errorf("failed to parse template: %v", err)
 	}
 
 	conn, err := grpc.Dial(*backendAddress, grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
-		log.Fatalf("Failed to connect to backend server: %v", err)
+		return fmt.Errorf("failed to connect to backend server: %v", err)
 	}
 	defer func() {
 		if err := conn.Close(); err != nil {
@@ -53,6 +58,7 @@ func main() {
 		if err != nil {
 			log.Printf("Failed to get environment variable: %v", err)
 			http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+			log.Println("Exiting due to error")
 			return
 		}
 
@@ -62,6 +68,7 @@ func main() {
 		if err != nil {
 			log.Printf("Failed to render template: %v", err)
 			http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+			log.Println("Exiting due to error")
 			return
 		}
 	})
@@ -69,7 +76,8 @@ func main() {
 	log.Printf("Frontend server started on port %v", *port)
 	err = http.ListenAndServe(fmt.Sprintf(":%v", *port), nil)
 	if err != nil {
-		log.Printf("Failed to start backend server: %v", err)
-		// TODO no fatal allowed bc. of defer in line 36
+		return fmt.Errorf("failed to start frontend server: %v", err)
 	}
+
+	return nil
 }
