@@ -3,11 +3,11 @@ package main
 import (
 	"embed"
 	"flag"
+	"fmt"
 	"html/template"
 	"log"
 	"net/http"
 	"os"
-	"strconv"
 )
 
 type PageData struct {
@@ -41,5 +41,5 @@ func main() {
 	})
 
 	log.Printf("Frontend server started on port %v", *port)
-	log.Fatal(http.ListenAndServe(":"+strconv.Itoa(*port), nil))
+	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%v", *port), nil))
 }
