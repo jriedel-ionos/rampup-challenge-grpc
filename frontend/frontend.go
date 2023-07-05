@@ -7,6 +7,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strconv"
 )
 
 type PageData struct {
@@ -17,7 +18,7 @@ type PageData struct {
 var templateFile embed.FS
 
 func main() {
-	port := flag.String("port", "8081", "running port for the frontend")
+	port := flag.Int("port", 8081, "port for the frontend")
 	flag.Parse()
 
 	tmpl, err := template.ParseFS(templateFile, "index.html")
@@ -40,5 +41,5 @@ func main() {
 	})
 
 	log.Printf("Frontend server started on port %v", *port)
-	log.Fatal(http.ListenAndServe(":"+*port, nil))
+	log.Fatal(http.ListenAndServe(":"+strconv.Itoa(*port), nil))
 }

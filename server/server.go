@@ -7,6 +7,7 @@ import (
 	"log"
 	"net"
 	"os"
+	"strconv"
 
 	"github.com/jriedel-ionos/rampup-challenge-grpc/server/pb"
 	"google.golang.org/grpc"
@@ -32,10 +33,10 @@ func (s *server) GetEnvironmentVariable(
 }
 
 func main() {
-	port := flag.String("port", "8080", "listening port for the backend")
+	port := flag.Int("port", 8080, "port for the backend")
 	flag.Parse()
 
-	listener, err := net.Listen("tcp", ":"+*port)
+	listener, err := net.Listen("tcp", ":"+strconv.Itoa(*port))
 	if err != nil {
 		panic(err)
 	}
