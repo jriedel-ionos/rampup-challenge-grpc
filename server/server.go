@@ -4,14 +4,12 @@ import (
 	"context"
 	"flag"
 	"fmt"
-	"log"
-	"net"
-	"os"
-	"strconv"
-
 	"github.com/jriedel-ionos/rampup-challenge-grpc/server/pb"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
+	"log"
+	"net"
+	"os"
 )
 
 type server struct {
@@ -36,7 +34,7 @@ func main() {
 	port := flag.Int("port", 8080, "port for the backend")
 	flag.Parse()
 
-	listener, err := net.Listen("tcp", ":"+strconv.Itoa(*port))
+	listener, err := net.Listen("tcp", fmt.Sprintf(":%v", *port))
 	if err != nil {
 		panic(err)
 	}
