@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"flag"
 	"fmt"
 	"log"
 	"net"
@@ -31,14 +32,15 @@ func (s *server) GetEnvironmentVariable(
 }
 
 func main() {
-	const Port = "8080"
+	port := flag.String("port", "8080", "listening port for the backend")
+	flag.Parse()
 
-	listener, err := net.Listen("tcp", ":"+Port)
+	listener, err := net.Listen("tcp", ":"+*port)
 	if err != nil {
 		panic(err)
 	}
 
-	log.Println("Backend server started on port " + Port)
+	log.Printf("Backend server started on port %v", *port)
 
 	s := grpc.NewServer()
 	reflection.Register(s)

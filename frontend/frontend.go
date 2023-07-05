@@ -2,6 +2,7 @@ package main
 
 import (
 	"embed"
+	"flag"
 	"html/template"
 	"log"
 	"net/http"
@@ -16,7 +17,8 @@ type PageData struct {
 var templateFile embed.FS
 
 func main() {
-	const Port = "8081"
+	port := flag.String("port", "8081", "running port for the frontend")
+	flag.Parse()
 
 	tmpl, err := template.ParseFS(templateFile, "index.html")
 	if err != nil {
@@ -31,12 +33,12 @@ func main() {
 
 		err = tmpl.Execute(w, data)
 		if err != nil {
-			log.Println("Failed to render template:", err)
+			log.Printf("Failed to render template: %v", err)
 			http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 			return
 		}
 	})
 
-	log.Println("Frontend server started on port " + Port)
-	log.Fatal(http.ListenAndServe(":"+Port, nil))
+	log.Printf("Frontend server started on port %v", *port)
+	log.Fatal(http.ListenAndServe(":"+*port, nil))
 }
