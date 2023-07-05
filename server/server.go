@@ -25,7 +25,7 @@ func (s *server) GetEnvironmentVariable(
 	error,
 ) {
 	value := os.Getenv(in.VariableName)
-	fmt.Println(value)
+	log.Println(value)
 	return &pb.GetEnvironmentVariableResponse{
 		Value: value,
 	}, nil
