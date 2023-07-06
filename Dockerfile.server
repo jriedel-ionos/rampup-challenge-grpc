@@ -17,6 +17,8 @@ FROM scratch
 
 COPY --from=builder /server /server
 
+ENV TEST=hallo
+
 EXPOSE 8080
 
 CMD ["/server"]
