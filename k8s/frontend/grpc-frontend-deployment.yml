@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: grpc-frontend
+spec:
+  #replicas: 0
+  selector:
+    matchLabels:
+      app: grpc-frontend
+  template:
+    metadata:
+      labels:
+        app: grpc-frontend
+    spec:
+      containers:
+        - name: grpc-frontend
+          image: ghcr.io/jriedel-ionos/rampup-challenge-grpc/frontend:latest
+          ports:
+            - containerPort: 8081
+          env:
+          - name: TARGET
+            value: grpc-server-service.default.svc.cluster.local:8080
