@@ -6,6 +6,8 @@ spec:
   ports:
     - port: 80
       targetPort: 8081
+      nodePort: 31234
   selector:
     app: grpc-frontend
-  type: LoadBalancer
+  type: NodePort
+
