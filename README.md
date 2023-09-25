@@ -17,4 +17,11 @@ and for frontend server:
 To show an environment variable in the browser:   
 `localhost:8081/yourvariable` for example `SHELL` --> `localhost:8081/SHELL`
 
+## Build docker images
+
+### Server
+`docker build -t ghcr.io/jriedel-ionos/rampup-challenge-grpc/server:latest -f Dockerfile.server .`
+### Frontend
+`docker build -t ghcr.io/jriedel-ionos/rampup-challenge-grpc/frontend:latest -f Dockerfile.frontend .`
+
 The variable `TEST` is guaranteed existing (it's defined in the `docker-compose.yml`, bc. some linux environments don't have some env variables.

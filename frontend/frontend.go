@@ -8,6 +8,7 @@ import (
 	"html/template"
 	"log"
 	"net/http"
+	"os"
 
 	"github.com/jriedel-ionos/rampup-challenge-grpc/server/pb"
 	"google.golang.org/grpc"
@@ -29,7 +30,7 @@ func main() {
 
 func mainImpl() error {
 	port := flag.Int("port", 8081, "port for the frontend")
-	backendAddress := flag.String("backend", "localhost:8080", "address of the backend server")
+	backendAddress := flag.String("backend", os.Getenv("TARGET"), "address of the backend server")
 	flag.Parse()
 
 	tmpl, err := template.ParseFS(templateFile, "index.html")
